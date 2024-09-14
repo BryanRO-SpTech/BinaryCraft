@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/componentsStyle.css">
+        <link rel="stylesheet" href="./css/convertStyle.css">
+        <link rel="stylesheet" href="./css/font.css">
+        <title>BinaryCraft</title>
+</head>
+
+<body>
+        <header>
+                <h1 class="white shadow title bold">BinaryCraft</h1>
+        </header>
+
+        <div class="origin-input-div">
+                <p class="white label">Insira o número na base de origem:</p>
+
+                <div class="box">
+                        <input type="text" id="ipt_origem" placeholder="Digite um número">
+                        <select id="baseSelector">
+                                <option value="10">10</option>
+                                <option value="2">2</option>
+                                <option value="8">8</option>
+                                <option value="16">16</option>
+                        </select>
+                </div>
+
+
+                <button id="converter">Converter</button>
+        </div>
+
+        <div class="container">
+                <div class="resultSelectBox">
+                        <p class="label white">Decimal:</p>
+                        <button class="showButton">Não</button>
+                        <input type="text" id="resultDecimal" class="result" readonly placeholder="Resultado Decimal">
+                </div>
+
+                <div class="resultSelectBox">
+                        <p class="label white">Binario:</p>
+                        <button class="showButton">Não</button>
+                        <input type="text" id="resultBinario" class="result" readonly placeholder="Resultado Binario">
+                </div>
+
+                <div class="resultSelectBox">
+                        <p class="label white">Octal:</p>
+                        <button class="showButton">Não</button>
+                        <input type="text" id="resultOctal" class="result" readonly placeholder="Resultado Octal">
+                </div>
+
+                <div class="resultSelectBox">
+                        <p class="label white">Hexadecimal:</p>
+                        <button class="showButton">Não</button>
+                        <input type="text" id="resultHexadecimal" class="result" readonly placeholder="Resultado Hexadecimal">
+                </div>
+        </div>
+
+        <button id="jogar">Jogar quiz</button>
+</body>
+
+</html>
+
+
+<script src="./js/buttonClickSound.js"> </script>
+<script src="./js/converterPage.js"></script>

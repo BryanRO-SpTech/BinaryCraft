@@ -1,0 +1,69 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
+
+
+.portal.in {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    opacity: 1;
+}
+
+.portal {
+    opacity: 0;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.music {
+    position: absolute;
+    font-size: 50px;
+    top: 0;
+    right: 50px;
+    z-index: 5;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.disableMusicIcon {
+    display: none;
+}
+
+
+.title {
+    margin-top: 50px;
+}
+
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 200px;
+}
+
+.menuButton {
+    width: 660px;
+    height: 50px;
+    font-size: 20px;
+}

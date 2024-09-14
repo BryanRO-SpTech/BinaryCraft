@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url(../images/backgroundConverter.jpg);
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+body.portal {
+    background-image: url(../images/nether.gif);
+    background-repeat: round;
+    background-size: auto;
+}
+
+.title {
+    margin-top: 50px;
+    font-size: 50px;
+}
+
+.origin-input-div {
+    margin-top: 100px;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#baseSelector {
+    font-family: Minecraftia;
+    background-color: rgb(31, 30, 30);
+    height: 45px;
+    width: 75px;
+    color: white;
+    border: white solid 1px;
+    font-size: 20px;
+} 
+
+#converter {    
+    width: 660px;
+    height: 50px;
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.resultSelectBox {
+    display: flex;
+    gap: 20px;
+    width: 55%;
+    justify-content: end;
+}
+
+.showButton {
+    width: 200px;
+    font-size: 20px;
+}
+
+.result {
+    opacity: 0;
+    cursor: default;
+}
+
+#jogar {
+    width: 660px;
+    height: 50px;
+    margin: 150px 0 30px 0;
+    font-size: 20px;
+}
+
+.loading {
+    height: 100vh;
+    width: 100vw; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}

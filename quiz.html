@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="css/quizStyle.css">
+    <link rel="stylesheet" href="css/componentsStyle.css">
+    <title>Quiz BinaryCraft</title>
+</head>
+
+<body>
+    <div id="toggleMusic">
+        <i class="bi bi-volume-up-fill music disableMusicIcon" id="unmuted"></i>
+        <i class="bi bi-volume-mute-fill music" id="mute"></i>
+    </div>
+
+
+    <main>
+        <h1 class="white bold shadow title">Quiz BinaryCraft</h1>
+
+        <div class="menu">
+            <button class="menuButton" id="startButton">Iniciar</button>
+            <button class="menuButton" id="difficultyButton">Dificuldade: <span id="difficulty">Fácil</span></button>
+            <a href="./index.html"><button class="menuButton">Voltar para Calculadora</button></a>
+        </div>
+
+        
+        
+        <audio src="./sounds/intro.mp3" loop id="introMusic"></audio>
+    </main>
+    <img class="portal in" src="./images/nether.gif">
+    <img id="background" src="../images/backgroundQuiz.jpg">
+</body>
+
+</html>
+
+<script src="./js/quizPage.js"></script>
+<script src="./js/buttonClickSound.js"></script>
