@@ -59,8 +59,15 @@ body.portal {
 .resultSelectBox {
     display: flex;
     gap: 20px;
-    width: 55%;
+    width: 100%;
+    justify-content: center;
+}
+
+.labelButtonAlign {
+    display: flex;
+    gap: 20px;
     justify-content: end;
+    width: 400px;
 }
 
 .showButton {

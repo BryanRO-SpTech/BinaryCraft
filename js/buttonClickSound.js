@@ -5,7 +5,9 @@ function buttonSound() {
 }
 
 document.addEventListener("click", (e) => {
-    if (e.target.tagName == "BUTTON" || e.target.tagName == "A") {
+    console.log(e.target.id);
+
+    if (e.target.tagName == "BUTTON" || e.target.id == "difficulty") {
         buttonSound();
     }
 });
