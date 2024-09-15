@@ -5,9 +5,12 @@ function buttonSound() {
 }
 
 document.addEventListener("click", (e) => {
-    console.log(e.target.id);
-
-    if (e.target.tagName == "BUTTON" || e.target.id == "difficulty") {
+    if (
+        e.target.tagName == "BUTTON" ||
+        e.target.id == "difficulty" ||
+        e.target.classList.contains("xp") ||
+        e.target.classList.contains("awnser")
+    ) {
         buttonSound();
     }
 });

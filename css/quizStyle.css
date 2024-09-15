@@ -67,3 +67,86 @@
     height: 50px;
     font-size: 20px;
 }
+
+
+
+body.quiz {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+main.quiz {
+    background-color: #c6c6c6;
+    width: 60%;
+    height: 650px;
+    border: solid 2px black;
+    border-radius: 10px;
+}
+
+#lifeBar {
+    height: 20px;
+    display: flex;
+    padding: 10px;
+}
+
+.heart {
+    width: 25px;
+    height: 25px;
+}
+
+.question {
+    margin-top: 30px;
+    font-size: 33px;
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.option {
+    width: 500px;
+    height: 80px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #a09172;
+    background-image: none;
+    
+    outline: none;
+    border: inset #544c3b 2px;
+}
+
+.option:hover {
+    background-color: #b688ae;
+    background-image: none;
+    outline: none;
+    border: inset #544c3b 2px;
+}
+
+.option:hover .awnser {
+    color: #fcfc7e;
+}
+
+.xp {
+    height: 35px;
+    margin-left: 20px;
+}
+
+.awnser {
+    margin: 0 auto;
+    font-size: 25px;
+    color: #e0d7c5;
+    text-shadow: none;
+}
+
+#xpBar {
+    margin-top: 50px;
+    font-size: 30px;
+}
