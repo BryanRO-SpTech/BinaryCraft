@@ -208,7 +208,9 @@ function showXp() {
 }
 
 function giveXp() {
-    xp += 100
+    const xpAudio = new Audio("./sounds/xp.mp3");
+    xp += 100;
+    xpAudio.play();
 }
 
 
