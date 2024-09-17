@@ -81,8 +81,9 @@ main.quiz {
     background-color: #c6c6c6;
     width: 60%;
     height: 650px;
-    border: solid 2px black;
+    border: solid 5px transparent;
     border-radius: 10px;
+    border-image: url(../images/borda.png) 999 repeat;
 }
 
 #lifeBar {
@@ -150,3 +151,57 @@ main.quiz {
     margin-top: 50px;
     font-size: 30px;
 }
+
+
+#death {
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+    
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 30%;
+
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 32, 32, 0);
+
+    transition: background-color 2s;
+}
+
+#death.red {
+    background-color: rgba(255, 32, 32, 0.212);
+}
+
+
+.deathMessage p {
+    margin-top: 100px;
+    font-size: 35px;
+
+    
+}
+
+.deathMessage .score {
+    font-size: 19px;
+}
+
+.deathMessage .score span {
+    color: yellow;
+}
+
+.respawnButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+
+
+

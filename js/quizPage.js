@@ -119,7 +119,9 @@ function startGame() {
     const main = document.querySelector("main");
     const body = document.querySelector("body");
 
-    difficulty = document.getElementById("difficulty").innerHTML;
+    if (!difficulty) {
+        difficulty = document.getElementById("difficulty").innerHTML;
+    }
 
     body.classList.add("quiz");
     main.classList.add("quiz");
@@ -174,7 +176,8 @@ function newQuestion(main) {
                 damage()
 
                 if (life <= 0) {
-
+                    showLife();
+                    return death(main);
                 }
 
                 return newQuestion(main);
@@ -212,6 +215,44 @@ function giveXp() {
     xp += 100;
     xpAudio.play();
 }
+
+function death(main) {
+    const deathAudio = new Audio("./sounds/death.mp3");
+    deathAudio.play();
+
+    main.innerHTML += `
+        <div id="death">
+            <div class="deathMessage">
+                <p class="white shadow">Você morreu!</p>
+                <span class="white shadow score">score: <span>${xp}</span></span>
+            </div>
+
+            <div class="respawnButtons">
+                <button class="menuButton" onclick="restart()">Renascer</button>
+                <button class="menuButton" onclick="backMenu()">Voltar ao menu</button> 
+            </div>
+        </div>
+    `;
+
+    const deathDiv = document.getElementById("death");
+
+    setTimeout(() => {
+        deathDiv.classList.add("red");
+    }, 10)
+}
+
+
+function restart() {
+    xp = 0;
+    life = 10;
+
+    startGame();
+}
+
+function backMenu() {
+    window.location.reload();
+}
+
 
 
 const startButton = document.getElementById("startButton");
