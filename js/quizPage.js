@@ -153,7 +153,7 @@ function newQuestion(main) {
                 
                 <button class="option">
                     <img class="xp" src="./images/threeXP.png"/>
-                    <p class="awnser"> ${shuffleAwsers[2]}${question.awnserBaseFormated}</p>
+                    <p class="awnser">${shuffleAwsers[2]}${question.awnserBaseFormated}</p>
                 </button>
             </div>
             <div id="xpBar" class="dark_green shadow"></div>
