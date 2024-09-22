@@ -117,6 +117,7 @@ function deletarOperacao() {
 
 
     mostrarCalculo();
+    output.innerHTML = "";
 }
 
 
@@ -234,8 +235,19 @@ function calcular() {
 
 
 function exibirResultado() {
+    const { ultimoItem } = ultimoItemArray(calculo);
+
+    if ("numero" in ultimoItem && !ultimoItem.numero) {
+        return output.innerHTML = `<p id=result>Adicione mais um número.</p>`;
+    }
+
+
     const resultados = calcular();
     let indiceBaseResultado = 0;
+
+    if (isNaN(resultados[0].resultado)) {
+        return output.innerHTML = `<p id=result>Resultado Indefinido (Não divida 0 por 0)</p>`;
+    }
 
     const furnaceAudio = new Audio("./sounds/furnace.mp3");
     furnaceAudio.play();
@@ -322,17 +334,34 @@ buttonCalcular.addEventListener("click", () => {
  * =====================================
  */
 
-(() => {
+const tutorialButton = document.getElementById("tutorialButton");
+
+tutorialButton.addEventListener("click", () => {
     const tutorialContainer = document.querySelector(".tutorialContainer");
+
+
+    // Adicionando os itens na div de tutorial;
+    tutorialContainer.innerHTML = `
+        <div class="speakDiv">
+                <img id="ballon" src="./images/speechBubble.png">
+                <img id="villager" src="./images/villager.png">
+                <h3 id="speak">Bem vindo a Binary furnace!!! Siga o passo a passo para utiliza-lá!</h3>
+                <button id="start">Iniciar Tutorial</button>
+        </div>
+   `;
+
+    tutorialContainer.style.display = "block";
+
+
     const speakDiv = document.querySelector(".speakDiv");
-    const speakBallon = document.getElementById("ballon");
-    const villager = document.getElementById("villager");
     const speak = document.getElementById("speak");
     const nextButton = document.getElementById("start");
     const addButton = document.getElementById("add");
 
     let numberButtons = document.querySelectorAll(".number");
     let operadores = document.querySelectorAll(".operador");
+    let operandos = document.querySelectorAll(".operando");
+    let resultado = document.getElementById("result");
 
     function adicionarERemoverClasseEmMuitosElementos(elementos, classe) {
         elementos.forEach(elemento => {
@@ -341,7 +370,17 @@ buttonCalcular.addEventListener("click", () => {
     }
 
 
-    function step01() {
+
+
+
+
+    const villageSound = new Audio("./sounds/villagerSound.mp3");
+    villageSound.play();
+
+    function step1() {
+        villageSound.currentTime = 0;
+        villageSound.play();
+
         nextButton.style.display = "none";
 
         speak.innerHTML = "Utilize o teclado para inserir valores a serem calculados.";
@@ -355,10 +394,13 @@ buttonCalcular.addEventListener("click", () => {
             numberButton.addEventListener("click", step2);
         });
 
-        nextButton.removeEventListener("click", step01);
+        nextButton.removeEventListener("click", step1);
     }
 
     function step2() {
+        villageSound.currentTime = 0;
+        villageSound.play();
+
         teclado.removeEventListener("click", step2);
 
         adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
@@ -371,6 +413,9 @@ buttonCalcular.addEventListener("click", () => {
     }
 
     function step3() {
+        villageSound.currentTime = 0;
+        villageSound.play();
+
         addButton.removeEventListener("click", step3);
 
         teclado.classList.add("tutorial");
@@ -383,10 +428,13 @@ buttonCalcular.addEventListener("click", () => {
                 operador.addEventListener("click", step4);
             });
 
-        }, 10);
+        }, 1);
     }
 
     function step4() {
+        villageSound.currentTime = 0;
+        villageSound.play();
+
         operadores.forEach(operador => {
             operador.removeEventListener("click", step4);
         });
@@ -396,16 +444,94 @@ buttonCalcular.addEventListener("click", () => {
         setTimeout(() => {
             numberButtons = document.querySelectorAll(".number");
             adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
-        }, 10);
-
-
+            numberButtons.forEach(numero => {
+                numero.addEventListener("click", step5);
+            });
+        }, 1);
 
         speak.innerHTML = "Adicione mais um operando."
     }
 
 
+    function step5() {
+        villageSound.currentTime = 0;
+        villageSound.play();
 
-    nextButton.addEventListener("click", step01);
+        numberButtons.forEach(numero => {
+            numero.removeEventListener("click", step5);
+        });
+        adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
+
+        setTimeout(() => {
+            operandos = document.querySelectorAll(".operando");
+
+            operandos.forEach(operando => {
+                operando.addEventListener("click", step6);
+            });
+        }, 1);
+
+        speak.innerHTML = "Clique em um operando para alterar a base dele. Caso não existam outras bases que comportem o numero digitado, nada acontecerá.";
+    }
 
 
-})();
+    function step6() {
+        villageSound.currentTime = 0;
+        villageSound.play();
+
+        operandos.forEach(operando => {
+            operando.removeEventListener("click", step6);
+        });
+
+        input.classList.remove("tutorial")
+
+        buttonCalcular.classList.add("tutorial");
+        output.classList.add("tutorial");
+
+        speakDiv.classList.add("step6");
+
+
+        speak.innerHTML = "Pronto, agora vamos ligar a fornalha!!!";
+
+        buttonCalcular.addEventListener("click", step7);
+    }
+
+    function step7() {
+        villageSound.currentTime = 0;
+        villageSound.play();
+
+        buttonCalcular.removeEventListener("click", step7);
+        buttonCalcular.classList.remove("tutorial");
+
+        setTimeout(() => {
+            resultado = document.getElementById("result");
+
+            resultado.addEventListener("click", step8);
+        }, 1000);
+
+        speak.innerHTML = "Clique no resultado para alterar a base.";
+    }
+
+    function step8() {
+        villageSound.currentTime = 0;
+        villageSound.play();
+
+        resultado.removeEventListener("click", step8);
+
+        nextButton.style.display = "block";
+        nextButton.innerHTML = "Encerrar Tutorial";
+        nextButton.addEventListener("click", encerrar);
+
+        speak.innerHTML = "Isso é tudo, aproveite!";
+    }
+
+    function encerrar() {
+        nextButton.removeEventListener("click", encerrar);
+
+        output.classList.remove("tutorial");
+
+        tutorialContainer.innerHTML = "";
+        tutorialContainer.style.display = "none";
+    }
+
+    nextButton.addEventListener("click", step1);
+});

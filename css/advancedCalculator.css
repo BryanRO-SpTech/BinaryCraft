@@ -187,6 +187,44 @@ body {
 }
 
 
+#tutorialButton {
+    width: 80px;
+    height: 80px;
+
+    position: absolute;
+
+    right: 15px;
+    top: 15px;
+
+    font-size: 50px;
+}
+
+#historyButton {
+    width: 80px;
+    height: 80px;
+
+    position: absolute;
+
+    left: 15px;
+    top: 15px;
+
+    font-size: 50px;
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#historyButton img {
+    width: 60px;
+    height: 60px;
+
+    pointer-events: none;
+}
+
+
+
 
 /*
 
@@ -212,15 +250,24 @@ body {
     background-color: rgba(85, 85, 85, 0.7); 
 
     overflow: hidden;
+    display: none;
 }
-
 
 .speakDiv {
     width: 600px;
     height: 600px;
     position: absolute; 
-    top: 0px;
+    top: 250px;
+    left: -50px;
+
+    transition: all 1s;
 }
+
+.speakDiv.step6 {
+    top: 20px;
+    left: -75px;
+}
+
 
 #ballon {
     width: 600px;
@@ -244,8 +291,8 @@ body {
 
 #start {
     position: absolute;
-    bottom: 0;
-    left: 40px;
+    bottom: 70px;
+    left:80px;
     width: 60%;
     height: 40px;
 }
@@ -261,28 +308,10 @@ body {
     right: 50%;
 }
 
-
-#input.tutorial {
+.tutorial {
     position: sticky;
     z-index: 10;
 }
-
-.number.tutorial {
-    position: sticky;
-    z-index: 10;
-}
-
-.operador.tutorial {
-    position: sticky;
-    z-index: 10;
-}
-
-#add.tutorial {
-    position: sticky;
-    z-index: 10; 
-}
-
-
 
 /* .furnace {
     position: sticky;
