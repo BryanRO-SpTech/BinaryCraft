@@ -104,8 +104,7 @@ function generateQuestions(difficulty) {
         questionBase: randomQuestionBase,
         awnserBase: awnserBase,
         questionBaseFormated: formatarBase(randomQuestionBase),
-        awnserBaseFormated: formatarBase(awnserBase),
-
+        awnserBaseFormated: formatarBase(awnserBase)
     }
 
 }

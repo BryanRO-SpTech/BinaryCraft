@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/componentsStyle.css">
+    <link rel="stylesheet" href="./css/advancedCalculator.css">
+    <title>Advanced BinaryCraft</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="inventory">
+            <h3>Binary furnace</h3>
+
+            <div class="furnace">
+                <h4>Calculo</h4>
+                <div class="data" id="input"></div>
+                <div class="box">
+                    <div class="div-fire">
+                        <img class="fire-mold" src="./images/fire.png" alt="fogo">
+                        <div class="fire" id="fireProgress"></div>
+                    </div>
+
+                    <div class="div-arrow">
+                        <img class="arrow-mold" src="./images/progressArrow.png" alt="">
+                        <div class="arrow-progress" id="arrowProgress"></div>
+                    </div>
+                </div>
+
+                <h4>Resultado</h4>
+                <div class="data" id="output"></div>
+
+                <button id="calcular">Refinar Cálculo</button>
+            </div>
+
+            <div class="keyboard" id="keyboard">
+                <div class="line">
+                    <button value="1" class="key number">1</button>
+                    <button value="2" class="key number">2</button>
+                    <button value="3" class="key number">3</button>
+                    <button value="A" class="key number">A</button>
+                    <button value="B" class="key number">B</button>
+                    <button value="C" class="key number">C</button>
+                </div>
+
+                <div class="line">
+                    <button value="4" class="key number">4</button>
+                    <button value="5" class="key number">5</button>
+                    <button value="6" class="key number">6</button>
+                    <button value="D" class="key number">D</button>
+                    <button value="E" class="key number">E</button>
+                    <button value="F" class="key number">F</button>
+                </div>
+
+                <div class="line">
+                    <button value="7" class="key number">7</button>
+                    <button value="8" class="key number">8</button>
+                    <button value="9" class="key number">9</button>
+                    <button value="0" class="key number">0</button>
+                    <button class="key" id="add">Add</button>
+                    <button class="key" id="delete">&#9003;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="./js/buttonClickSound.js"></script>
+<script src="./js/advancedCalculator.js"></script>

@@ -9,7 +9,9 @@ document.addEventListener("click", (e) => {
         e.target.tagName == "BUTTON" ||
         e.target.id == "difficulty" ||
         e.target.classList.contains("xp") ||
-        e.target.classList.contains("awnser")
+        e.target.classList.contains("awnser") ||
+        e.target.classList.contains("operando") ||
+        e.target.id("result")
     ) {
         buttonSound();
     }

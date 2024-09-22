@@ -1,0 +1,186 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("../images/advancedCalculatorBackground.png");
+    background-size: 100% 120%;
+    background-repeat: no-repeat;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inventory {
+    width: 800px;
+    height: 700px;
+
+    background: #c6c6c6;
+    box-shadow: 5px 5px 0px #555555, inset 4px 4px 0px #fefefe;
+    padding-top: 5px;
+    padding-left: 5px;
+    border-radius: 3px;
+}
+
+
+.furnace {
+    width: 100%;
+    height: 250px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+
+    margin-top: 20px;
+
+}
+
+.data {
+    font-family: Minecraftia;
+    background-color: rgb(31, 30, 30);
+    border: white solid 1px;
+    width: 80%;
+    height: 45px;
+    color: white;
+    font-size: large;
+    padding: 20px 10px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+    font-size: 20px;
+
+    overflow-y: hidden; 
+    overflow-x: scroll;
+
+    user-select: none;
+}
+
+.data::-webkit-scrollbar {
+    display: none;
+}
+
+.base {
+    font-size: 10px;
+}
+
+
+.box {
+    display: flex;
+    gap: 30px;
+}
+
+.div-fire {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background-color: #8b8b8b;
+}
+
+.fire-mold {
+    position: relative;
+    z-index: 2; 
+    width: 100%;
+    height: 100%;
+}
+
+.fire {
+    position: absolute;
+    bottom: 0;
+    left: 0; 
+    width: 100%;
+    height: 0;
+    background-color: rgb(255, 145, 0); 
+    z-index: 1; 
+}
+
+
+
+.div-arrow {
+    position: relative;
+    width: 40px;
+    height: 60px;
+    background-color: #8b8b8b;
+}
+
+.arrow-mold {
+    position: relative;
+    z-index: 2; 
+    width: 100%;
+    height: 100%;
+}
+
+.arrow-progress {
+    position: absolute;
+    top: 0;
+    left: 0; 
+    width: 100%;
+    height: 0;
+    background-color: rgb(255, 255, 255); 
+    z-index: 1; 
+
+    
+}
+
+@keyframes fireAnimation {
+    from {
+        height: 100%;
+    }
+
+    to {
+        height: 0%;
+    }
+}
+
+@keyframes progressAnimation {
+    from {
+        height: 0%;
+    }
+
+    to {
+        height: 100%;
+    }
+}
+
+
+#calcular {
+    width: 250px;
+    height: 50px;
+    font-size: 20px;
+    margin-top: 15px;
+} 
+
+
+.keyboard {
+    margin: 80px auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.line {
+    display: flex;
+    height: 80px;
+}
+
+.key {
+    width: 80px;
+    font-size: 20px;
+}
+
+.operando, #result {
+    background-color: #686868;
+    border-radius: 5px;
+    cursor: pointer;
+}
