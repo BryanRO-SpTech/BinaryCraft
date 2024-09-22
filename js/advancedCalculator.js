@@ -43,11 +43,6 @@ function continuarOperacao(numero) {
 function criarNovaOperacao() {
     const { ultimoItem, tamanho } = ultimoItemArray(calculo);
 
-
-    if (tamanho > 0 && "numero" in ultimoItem && ultimoItem.numero === "") {
-        return;
-    }
-
     const operacao = new Object();
 
     if (tamanho === 0 || "operador" in ultimoItem) {
@@ -319,15 +314,6 @@ buttonCalcular.addEventListener("click", () => {
 
 
 
-
-
-
-
-
-
-
-
-
 /**
  * ======================================
  * 
@@ -335,3 +321,91 @@ buttonCalcular.addEventListener("click", () => {
  * 
  * =====================================
  */
+
+(() => {
+    const tutorialContainer = document.querySelector(".tutorialContainer");
+    const speakDiv = document.querySelector(".speakDiv");
+    const speakBallon = document.getElementById("ballon");
+    const villager = document.getElementById("villager");
+    const speak = document.getElementById("speak");
+    const nextButton = document.getElementById("start");
+    const addButton = document.getElementById("add");
+
+    let numberButtons = document.querySelectorAll(".number");
+    let operadores = document.querySelectorAll(".operador");
+
+    function adicionarERemoverClasseEmMuitosElementos(elementos, classe) {
+        elementos.forEach(elemento => {
+            elemento.classList.toggle(classe);
+        })
+    }
+
+
+    function step01() {
+        nextButton.style.display = "none";
+
+        speak.innerHTML = "Utilize o teclado para inserir valores a serem calculados.";
+
+        adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
+
+        input.classList.add("tutorial");
+
+
+        numberButtons.forEach(numberButton => {
+            numberButton.addEventListener("click", step2);
+        });
+
+        nextButton.removeEventListener("click", step01);
+    }
+
+    function step2() {
+        teclado.removeEventListener("click", step2);
+
+        adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
+
+        addButton.classList.add("tutorial");
+        speak.innerHTML = 'Aperte o botão "add" para adicionar o operando e mudar para o teclado de operadores.';
+
+
+        addButton.addEventListener("click", step3);
+    }
+
+    function step3() {
+        addButton.removeEventListener("click", step3);
+
+        teclado.classList.add("tutorial");
+        speak.innerHTML = "Aperte em um operador para adicionar ao cálculo.";
+
+        setTimeout(() => {
+            operadores = document.querySelectorAll(".operador");
+
+            operadores.forEach(operador => {
+                operador.addEventListener("click", step4);
+            });
+
+        }, 10);
+    }
+
+    function step4() {
+        operadores.forEach(operador => {
+            operador.removeEventListener("click", step4);
+        });
+
+        teclado.classList.remove("tutorial");
+
+        setTimeout(() => {
+            numberButtons = document.querySelectorAll(".number");
+            adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
+        }, 10);
+
+
+
+        speak.innerHTML = "Adicione mais um operando."
+    }
+
+
+
+    nextButton.addEventListener("click", step01);
+
+
+})();

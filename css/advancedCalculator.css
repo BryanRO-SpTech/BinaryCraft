@@ -183,4 +183,110 @@ body {
     background-color: #686868;
     border-radius: 5px;
     cursor: pointer;
+    padding: 1px 10px;
 }
+
+
+
+/*
+
+    ESTILIZAÇÃO DO TUTORIAL
+
+*/
+
+/* .tutorialContainer {
+    display: none;
+} */
+
+
+.tutorialContainer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    
+    z-index: 5;
+    background-color: rgba(85, 85, 85, 0.7); 
+
+    overflow: hidden;
+}
+
+
+.speakDiv {
+    width: 600px;
+    height: 600px;
+    position: absolute; 
+    top: 0px;
+}
+
+#ballon {
+    width: 600px;
+    position: absolute; 
+    left: 380px; 
+    transform: translate(-50%, 20px); 
+}
+
+#villager {
+    position: absolute; 
+    left: 120px; 
+    top: 145px; 
+}
+
+#speak {
+    position: absolute;
+    top: 30px;
+    left: 90px;
+    width: 590px;
+}
+
+#start {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    width: 60%;
+    height: 40px;
+}
+
+
+
+
+
+#keyboard.tutorial {
+    position: sticky;
+    z-index: 10;
+    left: 50%;
+    right: 50%;
+}
+
+
+#input.tutorial {
+    position: sticky;
+    z-index: 10;
+}
+
+.number.tutorial {
+    position: sticky;
+    z-index: 10;
+}
+
+.operador.tutorial {
+    position: sticky;
+    z-index: 10;
+}
+
+#add.tutorial {
+    position: sticky;
+    z-index: 10; 
+}
+
+
+
+/* .furnace {
+    position: sticky;
+    z-index: 10;
+    left: 50%;
+    right: 50%;
+} */

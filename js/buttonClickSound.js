@@ -11,7 +11,7 @@ document.addEventListener("click", (e) => {
         e.target.classList.contains("xp") ||
         e.target.classList.contains("awnser") ||
         e.target.classList.contains("operando") ||
-        e.target.id("result")
+        e.target.id == "result"
     ) {
         buttonSound();
     }
