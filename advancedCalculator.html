@@ -61,7 +61,18 @@
                     <button value="8" class="key number">8</button>
                     <button value="9" class="key number">9</button>
                     <button value="0" class="key number">0</button>
-                    <button class="key" id="add">Add</button>
+                    <button class="key" id="add">
+                        <div class="operadores">
+                            <div>
+                                <span>+</span>
+                                <span>-</span>
+                            </div>
+                            <div >
+                                <span>&#247;</span>
+                                <span>&times;</span>
+                            </div>
+                        </div>
+                    </button>
                     <button class="key" id="delete">&#9003;</button>
                 </div>
             </div>
@@ -77,8 +88,17 @@
     
     <div class="historyContainer">
             <div class="bookBox">
-                <div id="bookContent">
+                <div class="bookContainer">
                     <h3>Histórico</h3>
+
+                    <div id="bookContent">
+                        
+                    </div>
+
+                    <div id="page">
+
+                    </div>
+
                 </div>
             </div>
     </div>

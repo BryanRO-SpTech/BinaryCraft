@@ -186,6 +186,10 @@ body {
     padding: 1px 10px;
 }
 
+.operadores {
+    pointer-events: none;
+}
+
 
 #tutorialButton {
     width: 80px;
@@ -226,7 +230,7 @@ body {
 
 /*
 
-    ESTILIZAÇÃO DO Histórico
+    ESTILIZAÇÃO DO HISTÓRICO
 
 */
 
@@ -245,6 +249,8 @@ body {
 
     display: flex;
     justify-content: center;
+
+    display: none;
 }
 
 .bookBox {
@@ -262,9 +268,29 @@ body {
     align-items: center;
 }
 
-#bookContent {
+.bookContainer {
     width: 390px;
     height: 550px;
+
+    flex-direction: column;
+}
+
+#bookContent {
+    height: 85%;
+}
+
+#page {
+    height: 10%;
+}
+
+#bookContent .operando {
+    background-color: transparent;
+    width: fit-content;
+}
+
+.calculoHistorico {
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -350,10 +376,3 @@ body {
     position: sticky;
     z-index: 10;
 }
-
-/* .furnace {
-    position: sticky;
-    z-index: 10;
-    left: 50%;
-    right: 50%;
-} */

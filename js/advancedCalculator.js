@@ -1,9 +1,10 @@
 const teclado = document.getElementById("keyboard");
-const input = document.getElementById("input");
+let input = document.getElementById("input");
 const output = document.getElementById("output");
 const buttonCalcular = document.getElementById("calcular");
 
 let calculo = [];
+let historico = [];
 
 function mostrarCalculo() {
     input.innerHTML = "";
@@ -83,7 +84,18 @@ function trocarTeclado() {
             <button value="8" class="key number">8</button>
             <button value="9" class="key number">9</button>
             <button value="0" class="key number">0</button>
-            <button class="key" id="add">Add</button>
+            <button class="key" id="add">
+                <div class="operadores">
+                    <div>
+                        <span>+</span>
+                    <span>-</span>
+                    </div>
+                        <div >
+                        <span>&#247;</span>
+                        <span>&times;</span>
+                    </div>
+                </div>
+            </button>
             <button class="key" id="delete">&#9003;</button>
         </div>
 
@@ -208,7 +220,9 @@ function calcular() {
         }
     });
 
-    const resultadoDecimal = Number(eval(converterNumerosParaDecimal.join("")));
+    const expressao = converterNumerosParaDecimal.join("");
+
+    const resultadoDecimal = Number(eval(expressao));
     const resultadoBinario = resultadoDecimal.toString(2);
     const resultadoOctal = resultadoDecimal.toString(8);
     const resultadoHexa = resultadoDecimal.toString(16);
@@ -258,10 +272,10 @@ function exibirResultado() {
     arrowProgress.style.animation = `linear progressAnimation 1s`;
     fireProgress.style.animation = `linear fireAnimation 1s`;
 
-    indiceBaseResultado = 0;
+    const formattedResult = `<p id=result>${resultados[indiceBaseResultado].resultado}<span class="base">${resultados[indiceBaseResultado].base}</span></p>`
 
     setTimeout(() => {
-        output.innerHTML = `<p id=result>${resultados[indiceBaseResultado].resultado}<span class="base">${resultados[indiceBaseResultado].base}</span></p>`;
+        output.innerHTML = formattedResult;
 
         arrowProgress.style.animation = `none`;
         fireProgress.style.animation = `none`;
@@ -280,7 +294,17 @@ function exibirResultado() {
         });
 
     }, 1000);
+
+    input = document.getElementById("input");
+
+    addHistorico(input.innerHTML, {
+        decimal: resultados[0].resultado,
+        binario: resultados[1].resultado,
+        octal: resultados[2].resultado,
+        hexa: resultados[3].resultado
+    });
 }
+
 
 teclado.addEventListener("click", (e) => {
     if (e.target.className.includes("number") || e.target.className.includes("operador")) {
@@ -321,6 +345,51 @@ buttonCalcular.addEventListener("click", () => {
     if (calculo.length > 0) {
         exibirResultado()
     }
+});
+
+
+
+
+/**
+ * ======================================
+ * 
+ *        HISTÓRICO
+ * 
+ * =====================================
+ */
+
+function addHistorico(valoresCalculados, { decimal, binario, octal, hexa }) {
+    historico.push({
+        valoresCalculados,
+        decimal,
+        binario,
+        octal,
+        hexa
+    });
+
+    exibirHistorico();
+}
+
+function exibirHistorico() {
+    const divHistorico = document.getElementById("bookContent");
+
+    console.log(historico);
+
+    divHistorico.innerHTML = `<div class="calculoHistorico"></div>`;
+
+    const calculoHistorico = document.querySelectorAll(".calculoHistorico");
+
+    historico.forEach((calculo) => {
+        calculoHistorico[calculoHistorico.length - 1].innerHTML += `${calculo.valoresCalculados}`;
+    });
+}
+
+const historyButton = document.getElementById("historyButton");
+
+historyButton.addEventListener("click", () => {
+    const historyContainer = document.querySelector(".historyContainer");
+
+    historyContainer.style.display = "flex";
 });
 
 
@@ -406,7 +475,7 @@ tutorialButton.addEventListener("click", () => {
         adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
 
         addButton.classList.add("tutorial");
-        speak.innerHTML = 'Aperte o botão "add" para adicionar o operando e mudar para o teclado de operadores.';
+        speak.innerHTML = 'Aperte o botão "+/-/x/\u{000F7}" para adicionar o operando e mudar para o teclado de operadores.';
 
 
         addButton.addEventListener("click", step3);
