@@ -80,10 +80,17 @@ body.portal {
     cursor: default;
 }
 
-#jogar {
+.botoesRedirecionar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 70px;
+}
+
+.botaoRedirecionar {
     width: 660px;
     height: 50px;
-    margin: 150px 0 30px 0;
     font-size: 20px;
 }
 

@@ -9,13 +9,17 @@ let historico = [];
 function mostrarCalculo() {
     input.innerHTML = "";
 
+    let mensagem = "";
+
     calculo.forEach((numero, index) => {
         if ("operador" in numero) {
-            return input.innerHTML += `<div class="operador" data-index="${index}">${numero.operador}<div>`
+            return mensagem += `<div class="operador" data-index="${index}">${numero.operador}</div>`
         }
 
-        return input.innerHTML += `<div class="operando" data-index="${index}">${numero.numero}<span class="base">${numero.base}</span><div>`
+        return mensagem += `<div class="operando" data-index="${index}">${numero.numero}<span class="base">${numero.base}</span></div>`
     });
+
+    input.innerHTML = mensagem;
 }
 
 function ultimoItemArray(array) {
@@ -272,7 +276,7 @@ function exibirResultado() {
     arrowProgress.style.animation = `linear progressAnimation 1s`;
     fireProgress.style.animation = `linear fireAnimation 1s`;
 
-    const formattedResult = `<p id=result>${resultados[indiceBaseResultado].resultado}<span class="base">${resultados[indiceBaseResultado].base}</span></p>`
+    const formattedResult = `<p id="result">${resultados[indiceBaseResultado].resultado}<span class="base">${resultados[indiceBaseResultado].base}</span></p>`
 
     setTimeout(() => {
         output.innerHTML = formattedResult;
@@ -297,12 +301,7 @@ function exibirResultado() {
 
     input = document.getElementById("input");
 
-    addHistorico(input.innerHTML, {
-        decimal: resultados[0].resultado,
-        binario: resultados[1].resultado,
-        octal: resultados[2].resultado,
-        hexa: resultados[3].resultado
-    });
+    addHistorico(input.innerHTML, resultados);
 }
 
 
@@ -358,13 +357,10 @@ buttonCalcular.addEventListener("click", () => {
  * =====================================
  */
 
-function addHistorico(valoresCalculados, { decimal, binario, octal, hexa }) {
+function addHistorico(valoresCalculados, resultados) {
     historico.push({
         valoresCalculados,
-        decimal,
-        binario,
-        octal,
-        hexa
+        resultados
     });
 
     exibirHistorico();
@@ -373,14 +369,23 @@ function addHistorico(valoresCalculados, { decimal, binario, octal, hexa }) {
 function exibirHistorico() {
     const divHistorico = document.getElementById("bookContent");
 
-    console.log(historico);
-
-    divHistorico.innerHTML = `<div class="calculoHistorico"></div>`;
+    divHistorico.innerHTML += `<div class="calculoHistorico"></div>`;
 
     const calculoHistorico = document.querySelectorAll(".calculoHistorico");
 
+    console.log(historico)
+
     historico.forEach((calculo) => {
-        calculoHistorico[calculoHistorico.length - 1].innerHTML += `${calculo.valoresCalculados}`;
+        calculoHistorico[calculoHistorico.length - 1].innerHTML = `
+        <div class="valorCalculado">${calculo.valoresCalculados}</div>
+        <p class="result">${historico[0].resultados[0].resultado}<span class="base">${historico[0].resultados[0].base}</span></p>`;
+    });
+
+
+    const result = document.querySelectorAll(".result");
+
+    result.forEach((resultado) => {
+
     });
 }
 
@@ -391,7 +396,6 @@ historyButton.addEventListener("click", () => {
 
     historyContainer.style.display = "flex";
 });
-
 
 
 

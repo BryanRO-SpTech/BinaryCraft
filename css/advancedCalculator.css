@@ -179,7 +179,7 @@ body {
     font-size: 20px;
 }
 
-.operando, #result {
+.operando, #result, .result {
     background-color: #686868;
     border-radius: 5px;
     cursor: pointer;
@@ -291,8 +291,29 @@ body {
 .calculoHistorico {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+
+    margin-top: 20px;
+    background-color: rgb(161, 150, 134);
 }
 
+.valorCalculado {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    user-select: none;
+}
+
+.valorCalculado .operando {
+    cursor: default;
+}
+
+.calculoHistorico .result {
+    width: fit-content;
+    margin: 0 auto;
+    background-color: rgb(209, 192, 166);
+}
 
 /*
 
