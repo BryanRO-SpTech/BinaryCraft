@@ -373,8 +373,6 @@ function exibirHistorico() {
 
     const calculoHistorico = document.querySelectorAll(".calculoHistorico");
 
-    console.log(historico)
-
     historico.forEach((calculo) => {
         calculoHistorico[calculoHistorico.length - 1].innerHTML = `
         <div class="valorCalculado">${calculo.valoresCalculados}</div>
@@ -382,11 +380,24 @@ function exibirHistorico() {
     });
 
 
-    const result = document.querySelectorAll(".result");
+    const resultados = document.querySelectorAll(".result");
 
-    result.forEach((resultado) => {
+    const bases = [10, 2, 8, 16];
 
+    resultados.forEach((resultado, index) => {
+        resultado.addEventListener("click", () => {
+            let baseAtual = bases.findIndex((base) => base === Number(resultado.querySelector(".base").innerHTML));
+
+            if (baseAtual < 3) {
+                baseAtual++
+            } else {
+                baseAtual = 0;
+            }
+
+            resultado.innerHTML = `${historico[index].resultados[baseAtual].resultado}<span class="base">${historico[index].resultados[baseAtual].base}</span>`;
+        });
     });
+
 }
 
 const historyButton = document.getElementById("historyButton");
