@@ -327,6 +327,30 @@ body {
     height: 40px;
 }
 
+#closeHistory {
+    color: red;
+    font-weight: bolder;
+    font-size: 40px;
+    
+    position: relative;
+    top: 100px;
+    left: 200px;
+    
+    cursor: pointer;
+}
+
+#closeHistory {
+    color: red;
+    font-weight: bolder;
+    font-size: 40px;
+    
+    position: relative;
+    top: 110px;
+    left: 180px;
+    
+    cursor: pointer;
+}
+
 /*
 
     ESTILIZAÇÃO DO TUTORIAL

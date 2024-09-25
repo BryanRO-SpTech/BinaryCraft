@@ -375,6 +375,7 @@ function exibirHistorico(page = 0) {
 
     const quantPaginas = Math.ceil(historicoReversed.length / 6) - 1;
     if (page > quantPaginas) page = quantPaginas;
+    else if (page < 0) page = 0;
 
     const skip = 6 * page;
     const limit = skip + 6;
@@ -392,9 +393,9 @@ function exibirHistorico(page = 0) {
     }).join("");
 
 
-    // historicoReversed.forEach((calculo, index) => {
+    const divPage = document.getElementById("page");
 
-    // });
+    divPage.innerHTML = `Pagina ${page + 1} de ${quantPaginas + 1}`;
 
 
     const resultados = document.querySelectorAll(".result");
@@ -415,16 +416,35 @@ function exibirHistorico(page = 0) {
         });
     });
 
+    return page;
+
 }
 
 const historyButton = document.getElementById("historyButton");
+const historyContainer = document.querySelector(".historyContainer");
 
-historyButton.addEventListener("click", () => {
-    const historyContainer = document.querySelector(".historyContainer");
+historyButton.addEventListener("click", () => historyContainer.style.display = "flex");
 
-    historyContainer.style.display = "flex";
+
+
+
+let paginaHistorico = 0;
+
+const nextPageButton = document.getElementById("nextPage");
+const prevPageButton = document.getElementById("prevPage");
+
+nextPageButton.addEventListener("click", () => {
+    paginaHistorico = exibirHistorico(++paginaHistorico);
 });
 
+prevPageButton.addEventListener("click", () => {
+    paginaHistorico = exibirHistorico(--paginaHistorico);
+});
+
+
+const closeHistoryButton = document.getElementById("closeHistory");
+
+closeHistoryButton.addEventListener("click", () => historyContainer.style.display = "none");
 
 
 /**
