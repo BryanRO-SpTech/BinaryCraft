@@ -55,8 +55,9 @@ function converter() {
         hexadecimal = decimal.toString(16);
     }
 
-    else if (baseOrigem == 16 && validarEntrada(valorNumeroOrigem, "0123456789ABCDEFabcdef")) {
-        hexadecimal = valorNumeroOrigem;
+    else if (baseOrigem == 16) {
+        if (validarEntrada(valorNumeroOrigem, "0123456789ABCDEFabcdef"))
+            hexadecimal = valorNumeroOrigem;
         decimal = parseInt(hexadecimal, 16);
         binario = decimal.toString(2);
         octal = decimal.toString(8);
