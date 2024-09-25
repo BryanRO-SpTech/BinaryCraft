@@ -23,11 +23,22 @@ function converter() {
     let octal = 0;
     let hexadecimal = 0;
 
-    if (baseOrigem == 10 && validarEntrada(valorNumeroOrigem, "0123456789")) {
-        decimal = Number(valorNumeroOrigem);
-        binario = decimal.toString(2);
-        octal = decimal.toString(8);
-        hexadecimal = decimal.toString(16);
+    if (baseOrigem == 10) {
+        if (validarEntrada(valorNumeroOrigem, "0123456789")) {
+            decimal = Number(valorNumeroOrigem);
+            binario = decimal.toString(2);
+            octal = decimal.toString(8);
+            hexadecimal = decimal.toString(16);
+        } else {
+            decimal = "#ERROR"
+            binario = "#ERROR"
+            octal = "#ERROR"
+            hexadecimal = "Error"
+
+            numeroOrigem.style.border = "1px solid red";
+        }
+
+
     }
 
     else if (baseOrigem == 2 && validarEntrada(valorNumeroOrigem, "01")) {
@@ -49,8 +60,6 @@ function converter() {
         decimal = parseInt(hexadecimal, 16);
         binario = decimal.toString(2);
         octal = decimal.toString(8);
-    } else {
-        numeroOrigem.style.border = "1px solid red";
     }
 
 
