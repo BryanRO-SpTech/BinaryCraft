@@ -366,18 +366,35 @@ function addHistorico(valoresCalculados, resultados) {
     exibirHistorico();
 }
 
-function exibirHistorico() {
+function exibirHistorico(page = 0) {
     const divHistorico = document.getElementById("bookContent");
 
-    divHistorico.innerHTML += `<div class="calculoHistorico"></div>`;
+    divHistorico.innerHTML = "";
 
-    const calculoHistorico = document.querySelectorAll(".calculoHistorico");
+    const historicoReversed = historico.slice().reverse();
 
-    historico.forEach((calculo) => {
-        calculoHistorico[calculoHistorico.length - 1].innerHTML = `
-        <div class="valorCalculado">${calculo.valoresCalculados}</div>
-        <p class="result">${historico[0].resultados[0].resultado}<span class="base">${historico[0].resultados[0].base}</span></p>`;
-    });
+    const quantPaginas = Math.ceil(historicoReversed.length / 6) - 1;
+    if (page > quantPaginas) page = quantPaginas;
+
+    const skip = 6 * page;
+    const limit = skip + 6;
+
+
+    divHistorico.innerHTML = historicoReversed.map((calculo, index) => {
+        if (index >= skip && index < limit) {
+            return `
+                    <div class="calculoHistorico">
+                        <div class="valorCalculado">${calculo.valoresCalculados}</div>
+                        <p class="result">${calculo.resultados[0].resultado}<span class="base">${calculo.resultados[0].base}</span></p>
+                    </div>
+                `;
+        }
+    }).join("");
+
+
+    // historicoReversed.forEach((calculo, index) => {
+
+    // });
 
 
     const resultados = document.querySelectorAll(".result");
