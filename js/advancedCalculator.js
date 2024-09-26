@@ -9,17 +9,17 @@ let historico = [];
 function mostrarCalculo() {
     input.innerHTML = "";
 
-    let mensagem = "";
-
-    calculo.forEach((numero, index) => {
+    input.innerHTML = calculo.map((numero, index) => {
         if ("operador" in numero) {
-            return mensagem += `<div class="operador" data-index="${index}">${numero.operador}</div>`
+            return `<div class="operador" data-index="${index}">${numero.operador}</div>`
+        } else if ("abrirParentese" in numero) {
+            return `<div class="abrirParentese" data-index="${index}">(</div>`
+        } else if ("fecharParentese" in numero) {
+            return `<div class="fecharParentese" data-index="${index}">)</div>`
         }
 
-        return mensagem += `<div class="operando" data-index="${index}">${numero.numero}<span class="base">${numero.base}</span></div>`
-    });
-
-    input.innerHTML = mensagem;
+        return `<div class="operando" data-index="${index}">${numero.numero}<span class="base">${numero.base}</span></div>`
+    }).join("");
 }
 
 function ultimoItemArray(array) {
@@ -31,18 +31,57 @@ function ultimoItemArray(array) {
 }
 
 
-function continuarOperacao(numero) {
+function continuarOperacaoNumeros(numero) {
     const { tamanho } = ultimoItemArray(calculo);
 
-    if (tamanho == 0) {
+    if (tamanho > 0 && "fecharParentese" in calculo[tamanho - 1]) return;
+
+
+    if (tamanho == 0 || "operador" in calculo[tamanho - 1] || "abrirParentese" in calculo[tamanho - 1]) {
         criarNovaOperacao();
     }
 
     if ("numero" in calculo[calculo.length - 1]) {
         calculo[calculo.length - 1].numero += numero;
-    } else {
-        calculo[calculo.length - 1].operador = numero;
     }
+
+    trocarBaseAutomatico();
+    mostrarCalculo();
+}
+
+function addOperador(operador) {
+    const { ultimoItem, tamanho } = ultimoItemArray(calculo);
+
+    if (tamanho > 0 && ("numero" in ultimoItem || "fecharParentese" in ultimoItem)) {
+        criarNovaOperacao();
+        calculo[calculo.length - 1].operador = operador;
+
+        mostrarCalculo();
+    }
+}
+
+function abrirParentese() {
+    const { ultimoItem, tamanho } = ultimoItemArray(calculo);
+
+    if (tamanho === 0 || "operador" in ultimoItem || "abrirParentese" in ultimoItem) {
+        calculo.push({ abrirParentese: "(" });
+    } else {
+        return;
+    }
+
+    mostrarCalculo();
+}
+
+function fecharParentese() {
+    const { ultimoItem, tamanho } = ultimoItemArray(calculo);
+
+    if (tamanho === 0 || "operador" in ultimoItem) {
+        return;
+    } else {
+        calculo.push({ fecharParentese: ")" });
+    }
+
+    mostrarCalculo();
 }
 
 function criarNovaOperacao() {
@@ -50,7 +89,7 @@ function criarNovaOperacao() {
 
     const operacao = new Object();
 
-    if (tamanho === 0 || "operador" in ultimoItem) {
+    if (tamanho === 0 || "operador" in ultimoItem || "abrirParentese" in ultimoItem) {
         operacao.numero = "";
         operacao.base = 2;
     } else {
@@ -58,66 +97,6 @@ function criarNovaOperacao() {
     }
 
     calculo.push(operacao);
-}
-
-
-function trocarTeclado() {
-    const { ultimoItem } = ultimoItemArray(calculo);
-
-    let teclas = `
-        <div class="line">
-            <button value="1" class="key number">1</button>
-            <button value="2" class="key number">2</button>
-            <button value="3" class="key number">3</button>
-            <button value="A" class="key number">A</button>
-            <button value="B" class="key number">B</button>
-            <button value="C" class="key number">C</button>
-        </div>
-
-        <div class="line">
-            <button value="4" class="key number">4</button>
-            <button value="5" class="key number">5</button>
-            <button value="6" class="key number">6</button>
-            <button value="D" class="key number">D</button>
-            <button value="E" class="key number">E</button>
-            <button value="F" class="key number">F</button>
-        </div>
-
-        <div class="line">
-            <button value="7" class="key number">7</button>
-            <button value="8" class="key number">8</button>
-            <button value="9" class="key number">9</button>
-            <button value="0" class="key number">0</button>
-            <button class="key" id="add">
-                <div class="operadores">
-                    <div>
-                        <span>+</span>
-                    <span>-</span>
-                    </div>
-                        <div >
-                        <span>&#247;</span>
-                        <span>&times;</span>
-                    </div>
-                </div>
-            </button>
-            <button class="key" id="delete">&#9003;</button>
-        </div>
-
-    `;
-
-
-    if ("numero" in ultimoItem && ultimoItem.numero !== "") {
-        teclas = `
-            <div class="line">
-                <button value="1" class="key operador">+</button>
-                <button value="2" class="key operador">-</button>
-                <button value="3" class="key operador">*</button>
-                <button value="A" class="key operador">/</button>
-            </div>
-        `;
-    }
-
-    teclado.innerHTML = teclas;
 }
 
 
@@ -162,7 +141,7 @@ function trocarBase(e) {
 
 
 function trocarBaseAutomatico() {
-    const { ultimoItem, ultimoIndice } = ultimoItemArray(calculo);
+    const { ultimoItem } = ultimoItemArray(calculo);
     const bases = [2, 8, 10, 16];
 
     let baseAtualIndex = bases.findIndex((base) => base == ultimoItem.base);
@@ -175,7 +154,7 @@ function trocarBaseAutomatico() {
         }
     }
 
-    calculo[ultimoIndice].base = bases[baseAtualIndex];
+    ultimoItem.base = bases[baseAtualIndex];
 
     if (!verificarBaseValida(ultimoItem.numero, ultimoItem.base)) {
         trocarBaseAutomatico();
@@ -219,8 +198,12 @@ function calcular() {
     const converterNumerosParaDecimal = calculo.map((operacao) => {
         if ("numero" in operacao) {
             return parseInt(operacao.numero, operacao.base);
-        } else {
-            return operacao.operador;
+        } else if ("operador" in operacao) {
+            return operacao.operador.replace("÷", "/");
+        } else if ("abrirParentese" in operacao) {
+            return "(";
+        } else if ("fecharParentese" in operacao) {
+            return ")";
         }
     });
 
@@ -253,17 +236,38 @@ function calcular() {
 
 
 function exibirResultado() {
-    const { ultimoItem } = ultimoItemArray(calculo);
+    const { ultimoItem, ultimoIndice } = ultimoItemArray(calculo);
 
-    if ("numero" in ultimoItem && !ultimoItem.numero) {
+    if ("operador" in ultimoItem || "abrirParentese" in ultimoItem) {
         return output.innerHTML = `<p id=result>Adicione mais um número.</p>`;
     }
 
+    if ("fecharParentese" in ultimoItem && "abrirParentese" in calculo[ultimoIndice - 1]) {
+        return output.innerHTML = `<p id=result>Os parendeses não podem ser vazios</p>`;
+    }
+
+    const parentesesAbertos = calculo.map((abrirParentese) => {
+        if ("abrirParentese" in abrirParentese) {
+            return abrirParentese.abrirParentese;
+        }
+    }).filter((abrirParentese) => abrirParentese === "(");
+
+    const parentesesFechados = calculo.map((fecharParentese) => {
+        if ("fecharParentese" in fecharParentese) {
+
+            return fecharParentese.fecharParentese;
+        }
+    }).filter((fecharParentese) => fecharParentese === ")");
+
+
+    if (parentesesAbertos.length !== parentesesFechados.length) {
+        return output.innerHTML = `<p id=result>Feche os parenteses corretamente.</p>`;
+    }
 
     const resultados = calcular();
     let indiceBaseResultado = 0;
 
-    if (isNaN(resultados[0].resultado)) {
+    if (isNaN(resultados[0].resultado) || !isFinite(resultados[0].resultado)) {
         return output.innerHTML = `<p id=result>Resultado Indefinido (Não divida 0 por 0)</p>`;
     }
 
@@ -295,6 +299,14 @@ function exibirResultado() {
             }
 
             resultado.innerHTML = `${resultados[indiceBaseResultado].resultado}<span class="base">${resultados[indiceBaseResultado].base}</span>`;
+
+
+            if (output.scrollWidth > 634) {
+                output.style.justifyContent = "flex-start";
+                output.scrollLeft = output.scrollWidth;
+            } else {
+                output.style.justifyContent = "center";
+            }
         });
 
     }, 1000);
@@ -306,30 +318,29 @@ function exibirResultado() {
 
 
 teclado.addEventListener("click", (e) => {
-    if (e.target.className.includes("number") || e.target.className.includes("operador")) {
-        continuarOperacao(e.target.innerHTML);
-    }
-
     if (e.target.className.includes("number")) {
-        trocarBaseAutomatico();
+        continuarOperacaoNumeros(e.target.innerHTML);
     }
 
-    if (e.target.className.includes("key")) {
-        mostrarCalculo();
+    else if (e.target.className.includes("operador")) {
+        addOperador(e.target.innerHTML);
     }
 
-    if (e.target.id === "add") {
-        trocarTeclado();
-        criarNovaOperacao();
-    }
-
-    if (e.target.className.includes("operador")) {
-        trocarTeclado();
-        criarNovaOperacao();
-    }
-
-    if (e.target.id === "delete") {
+    else if (e.target.id === "delete") {
         deletarOperacao();
+    }
+
+    else if (e.target.id === "abrirParentese") {
+        abrirParentese();
+    }
+
+    else if (e.target.id === "fecharParentese") {
+        fecharParentese();
+    }
+
+    if (input.scrollWidth > 634) {
+        input.style.justifyContent = "flex-start";
+        input.scrollLeft = input.scrollWidth;
     }
 });
 
@@ -342,7 +353,7 @@ input.addEventListener("click", (e) => {
 
 buttonCalcular.addEventListener("click", () => {
     if (calculo.length > 0) {
-        exibirResultado()
+        exibirResultado();
     }
 });
 
@@ -399,10 +410,12 @@ function exibirHistorico(page = 0) {
 
 
     const resultados = document.querySelectorAll(".result");
+    const resultadosArray = Array.from(resultados);
+    const resultadosArrayReversed = resultadosArray.reverse();
 
     const bases = [10, 2, 8, 16];
 
-    resultados.forEach((resultado, index) => {
+    resultadosArrayReversed.forEach((resultado, index) => {
         resultado.addEventListener("click", () => {
             let baseAtual = bases.findIndex((base) => base === Number(resultado.querySelector(".base").innerHTML));
 
@@ -477,7 +490,6 @@ tutorialButton.addEventListener("click", () => {
     const speakDiv = document.querySelector(".speakDiv");
     const speak = document.getElementById("speak");
     const nextButton = document.getElementById("start");
-    const addButton = document.getElementById("add");
 
     let numberButtons = document.querySelectorAll(".number");
     let operadores = document.querySelectorAll(".operador");
@@ -522,72 +534,50 @@ tutorialButton.addEventListener("click", () => {
         villageSound.currentTime = 0;
         villageSound.play();
 
-        teclado.removeEventListener("click", step2);
+        numberButtons.forEach(numberButton => {
+            numberButton.classList.remove("tutorial");
+            numberButton.removeEventListener("click", step2);
+        });
 
-        adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
+        operadores.forEach(operador => {
+            operador.classList.add("tutorial");
+            operador.addEventListener("click", step3);
+        });
 
-        addButton.classList.add("tutorial");
-        speak.innerHTML = 'Aperte o botão "+/-/x/\u{000F7}" para adicionar o operando e mudar para o teclado de operadores.';
-
-
-        addButton.addEventListener("click", step3);
+        speak.innerHTML = 'Aperte em um operador para realizar a operação.';
     }
 
     function step3() {
         villageSound.currentTime = 0;
         villageSound.play();
 
-        addButton.removeEventListener("click", step3);
+        operadores.forEach(operador => {
+            operador.classList.remove("tutorial");
+            operador.removeEventListener("click", step3);
+        });
 
-        teclado.classList.add("tutorial");
-        speak.innerHTML = "Aperte em um operador para adicionar ao cálculo.";
+        speak.innerHTML = "Aperte em mais um número para adicionar ao cálculo.";
 
-        setTimeout(() => {
-            operadores = document.querySelectorAll(".operador");
-
-            operadores.forEach(operador => {
-                operador.addEventListener("click", step4);
-            });
-
-        }, 1);
+        numberButtons.forEach(numero => {
+            numero.classList.add("tutorial");
+            numero.addEventListener("click", step4);
+        });
     }
 
     function step4() {
         villageSound.currentTime = 0;
         villageSound.play();
 
-        operadores.forEach(operador => {
-            operador.removeEventListener("click", step4);
-        });
-
-        teclado.classList.remove("tutorial");
-
-        setTimeout(() => {
-            numberButtons = document.querySelectorAll(".number");
-            adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
-            numberButtons.forEach(numero => {
-                numero.addEventListener("click", step5);
-            });
-        }, 1);
-
-        speak.innerHTML = "Adicione mais um operando."
-    }
-
-
-    function step5() {
-        villageSound.currentTime = 0;
-        villageSound.play();
-
         numberButtons.forEach(numero => {
-            numero.removeEventListener("click", step5);
+            numero.removeEventListener("click", step4);
+            numero.classList.remove("tutorial");
         });
-        adicionarERemoverClasseEmMuitosElementos(numberButtons, "tutorial");
 
         setTimeout(() => {
             operandos = document.querySelectorAll(".operando");
 
             operandos.forEach(operando => {
-                operando.addEventListener("click", step6);
+                operando.addEventListener("click", step5);
             });
         }, 1);
 
@@ -595,15 +585,15 @@ tutorialButton.addEventListener("click", () => {
     }
 
 
-    function step6() {
+    function step5() {
         villageSound.currentTime = 0;
         villageSound.play();
 
         operandos.forEach(operando => {
-            operando.removeEventListener("click", step6);
+            operando.removeEventListener("click", step5);
         });
 
-        input.classList.remove("tutorial")
+        input.classList.remove("tutorial");
 
         buttonCalcular.classList.add("tutorial");
         output.classList.add("tutorial");
@@ -613,30 +603,30 @@ tutorialButton.addEventListener("click", () => {
 
         speak.innerHTML = "Pronto, agora vamos ligar a fornalha!!!";
 
-        buttonCalcular.addEventListener("click", step7);
+        buttonCalcular.addEventListener("click", step6);
+    }
+
+    function step6() {
+        villageSound.currentTime = 0;
+        villageSound.play();
+
+        buttonCalcular.removeEventListener("click", step6);
+        buttonCalcular.classList.remove("tutorial");
+
+        setTimeout(() => {
+            resultado = document.getElementById("result");
+
+            resultado.addEventListener("click", step7);
+        }, 1000);
+
+        speak.innerHTML = "Clique no resultado para alterar a base.";
     }
 
     function step7() {
         villageSound.currentTime = 0;
         villageSound.play();
 
-        buttonCalcular.removeEventListener("click", step7);
-        buttonCalcular.classList.remove("tutorial");
-
-        setTimeout(() => {
-            resultado = document.getElementById("result");
-
-            resultado.addEventListener("click", step8);
-        }, 1000);
-
-        speak.innerHTML = "Clique no resultado para alterar a base.";
-    }
-
-    function step8() {
-        villageSound.currentTime = 0;
-        villageSound.play();
-
-        resultado.removeEventListener("click", step8);
+        resultado.removeEventListener("click", step7);
 
         nextButton.style.display = "block";
         nextButton.innerHTML = "Encerrar Tutorial";

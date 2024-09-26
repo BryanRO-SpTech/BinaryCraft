@@ -21,7 +21,7 @@ body {
 
 .inventory {
     width: 800px;
-    height: 700px;
+    height: 710px;
 
     background: #c6c6c6;
     box-shadow: 5px 5px 0px #555555, inset 4px 4px 0px #fefefe;
@@ -159,6 +159,7 @@ body {
     height: 50px;
     font-size: 20px;
     margin-top: 15px;
+    user-select: none;
 } 
 
 
@@ -167,6 +168,7 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
+    user-select: none;
 }
 
 
@@ -325,6 +327,12 @@ body {
     width: fit-content;
     margin: 0 auto;
     background-color: rgb(209, 192, 166);
+    max-width: 100%;
+    overflow: auto;
+}
+
+.calculoHistorico .result::-webkit-scrollbar {
+    display: none;
 }
 
 .pageSelector {
@@ -425,17 +433,6 @@ body {
     left:80px;
     width: 60%;
     height: 40px;
-}
-
-
-
-
-
-#keyboard.tutorial {
-    position: sticky;
-    z-index: 10;
-    left: 50%;
-    right: 50%;
 }
 
 .tutorial {
