@@ -18,27 +18,16 @@ function converter() {
     numeroOrigem.style.border = "1px solid white";
 
 
-    let decimal = 0;
-    let binario = 0;
-    let octal = 0;
-    let hexadecimal = 0;
+    let decimal = "Número digítado não corresponde a base.";
+    let binario = "Número digítado não corresponde a base.";
+    let octal = "Número digítado não corresponde a base.";
+    let hexadecimal = "Número digítado não corresponde a base.";
 
-    if (baseOrigem == 10) {
-        if (validarEntrada(valorNumeroOrigem, "0123456789")) {
-            decimal = Number(valorNumeroOrigem);
-            binario = decimal.toString(2);
-            octal = decimal.toString(8);
-            hexadecimal = decimal.toString(16);
-        } else {
-            decimal = "#ERROR"
-            binario = "#ERROR"
-            octal = "#ERROR"
-            hexadecimal = "Error"
-
-            numeroOrigem.style.border = "1px solid red";
-        }
-
-
+    if (baseOrigem == 10 && validarEntrada(valorNumeroOrigem, "0123456789")) {
+        decimal = Number(valorNumeroOrigem);
+        binario = decimal.toString(2);
+        octal = decimal.toString(8);
+        hexadecimal = decimal.toString(16);
     }
 
     else if (baseOrigem == 2 && validarEntrada(valorNumeroOrigem, "01")) {
@@ -63,8 +52,7 @@ function converter() {
         octal = decimal.toString(8);
     }
 
-
-    return { decimal, binario, octal, hexadecimal };
+    return { decimal, binario, octal, hexadecimal }
 }
 
 
@@ -74,7 +62,7 @@ function showResult() {
     document.getElementById("resultDecimal").value = decimal;
     document.getElementById("resultBinario").value = binario;
     document.getElementById("resultOctal").value = octal;
-    document.getElementById("resultHexadecimal").value = `#${hexadecimal.toUpperCase()}`;
+    document.getElementById("resultHexadecimal").value = `${typeof decimal === "number" ? `#${hexadecimal.toUpperCase()}` : hexadecimal}`;
 }
 
 const convertButton = document.getElementById("converter");
@@ -86,9 +74,6 @@ convertButton.addEventListener("click", () => {
         showResult();
     }
 });
-
-
-
 
 
 

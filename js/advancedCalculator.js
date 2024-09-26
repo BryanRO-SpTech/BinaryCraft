@@ -236,6 +236,9 @@ function calcular() {
 
 
 function exibirResultado() {
+    output.style.justifyContent = "center";
+
+
     const { ultimoItem, ultimoIndice } = ultimoItemArray(calculo);
 
     if ("operador" in ultimoItem || "abrirParentese" in ultimoItem) {
@@ -378,6 +381,9 @@ function addHistorico(valoresCalculados, resultados) {
 }
 
 function exibirHistorico(page = 0) {
+    const bookSound = new Audio("./sounds/book.mp3");
+    bookSound.play();
+
     const divHistorico = document.getElementById("bookContent");
 
     divHistorico.innerHTML = "";
